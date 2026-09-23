@@ -8,7 +8,7 @@ COPY . .
 RUN printf '{\n  "apiUrl": ""\n}\n' > public/config.json && npx ng build --configuration production
 
 # ---------- runtime (non-root nginx listening on 8080)
-FROM nginxinc/nginx-unprivileged:1.30.5-alpine
+FROM nginxinc/nginx-unprivileged:1.31.5-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/web/browser /usr/share/nginx/html
 EXPOSE 8080
