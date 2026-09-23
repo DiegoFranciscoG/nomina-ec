@@ -1,0 +1,49 @@
+# ---- Secretos y entorno
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+# ---- Java / Maven / Gradle
+target/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+.gradle/
+*.class
+*.log
+hs_err_pid*
+# ---- Node / Angular / React
+node_modules/
+dist/
+.angular/
+.next/
+coverage/
+npm-debug.log*
+# ---- Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+*.duckdb
+*.duckdb.wal
+# ---- Flutter / Dart / Android
+.dart_tool/
+.flutter-plugins*
+*.apk
+*.aab
+local.properties
+# ---- IDE / SO
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+nbproject/private/
+.DS_Store
+Thumbs.db

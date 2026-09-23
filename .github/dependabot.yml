@@ -1,0 +1,19 @@
+# Deja solo los ecosistemas que existan en el proyecto (Dependabot marca error si falta el manifiesto).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  # - package-ecosystem: maven      # si hay pom.xml
+  #   directory: /
+  #   schedule: { interval: weekly }
+  # - package-ecosystem: npm        # si hay package.json (ajusta directory)
+  #   directory: /frontend
+  #   schedule: { interval: weekly }
+  # - package-ecosystem: pip        # si hay requirements.txt / pyproject.toml
+  #   directory: /
+  #   schedule: { interval: weekly }
+  # - package-ecosystem: docker     # si hay Dockerfile
+  #   directory: /
+  #   schedule: { interval: weekly }
