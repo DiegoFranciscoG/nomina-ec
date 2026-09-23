@@ -19,7 +19,7 @@
     <properties>
         <java.version>21</java.version>
         <maven.compiler.release>21</maven.compiler.release>
-        <springdoc.version>2.9.1</springdoc.version>
+        <springdoc.version>3.1.1</springdoc.version>
         <jjwt.version>0.13.0</jjwt.version>
         <openpdf.version>3.0.5</openpdf.version>
         <jacoco.version>0.8.15</jacoco.version>
