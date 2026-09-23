@@ -28,7 +28,7 @@ public abstract class IntegrationTest {
 
     public static final Instant TODAY = Instant.parse("2026-09-23T15:00:00Z");
 
-    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16.10-alpine");
+    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16.15-alpine");
 
     static {
         POSTGRES.start();
