@@ -25,7 +25,7 @@ CREATE TABLE employees (
     first_names            VARCHAR(80)  NOT NULL,
     last_names             VARCHAR(80)  NOT NULL,
     email                  VARCHAR(120),
-    family_dependents      SMALLINT     NOT NULL DEFAULT 0 CHECK (family_dependents BETWEEN 0 AND 20),
+    family_dependents      INTEGER      NOT NULL DEFAULT 0 CHECK (family_dependents BETWEEN 0 AND 20),
     catastrophic_condition BOOLEAN      NOT NULL DEFAULT FALSE,
     active                 BOOLEAN      NOT NULL DEFAULT TRUE,
     created_at             TIMESTAMPTZ  NOT NULL DEFAULT now()
@@ -36,7 +36,7 @@ CREATE TABLE contracts (
     employee_id       BIGINT        NOT NULL REFERENCES employees (id),
     position_id       BIGINT        NOT NULL REFERENCES positions (id),
     contract_type     VARCHAR(20)   NOT NULL CHECK (contract_type IN ('INDEFINITE', 'EVENTUAL', 'OCCASIONAL', 'SEASONAL', 'PER_PROJECT')),
-    weekly_hours      SMALLINT      NOT NULL DEFAULT 40 CHECK (weekly_hours BETWEEN 1 AND 40),
+    weekly_hours      INTEGER       NOT NULL DEFAULT 40 CHECK (weekly_hours BETWEEN 1 AND 40),
     monthly_salary    NUMERIC(12,2) NOT NULL CHECK (monthly_salary > 0),
     start_date        DATE          NOT NULL,
     end_date          DATE,
@@ -57,7 +57,7 @@ CREATE TABLE concepts (
     concept_type       VARCHAR(25)  NOT NULL CHECK (concept_type IN ('INCOME', 'DEDUCTION', 'PROVISION', 'EMPLOYER_CONTRIBUTION')),
     iess_taxable       BOOLEAN      NOT NULL,
     income_tax_taxable BOOLEAN      NOT NULL,
-    sort_order         SMALLINT     NOT NULL DEFAULT 0
+    sort_order         INTEGER      NOT NULL DEFAULT 0
 );
 
 CREATE TABLE legal_parameters (
@@ -91,7 +91,7 @@ CREATE INDEX ix_legal_parameter_audit_code ON legal_parameter_audit (code, chang
 
 CREATE TABLE income_tax_brackets (
     id            BIGSERIAL PRIMARY KEY,
-    fiscal_year   SMALLINT      NOT NULL,
+    fiscal_year   INTEGER       NOT NULL,
     lower_bound   NUMERIC(12,2) NOT NULL,
     upper_bound   NUMERIC(12,2),
     base_tax      NUMERIC(12,2) NOT NULL,
@@ -103,8 +103,8 @@ CREATE TABLE income_tax_brackets (
 
 CREATE TABLE personal_expense_caps (
     id                BIGSERIAL PRIMARY KEY,
-    fiscal_year       SMALLINT     NOT NULL,
-    family_dependents SMALLINT     NOT NULL CHECK (family_dependents BETWEEN 0 AND 5),
+    fiscal_year       INTEGER      NOT NULL,
+    family_dependents INTEGER      NOT NULL CHECK (family_dependents BETWEEN 0 AND 5),
     basket_multiplier NUMERIC(6,2) NOT NULL CHECK (basket_multiplier > 0),
     source_url        VARCHAR(500) NOT NULL,
     UNIQUE (fiscal_year, family_dependents)
@@ -113,7 +113,7 @@ CREATE TABLE personal_expense_caps (
 CREATE TABLE personal_expense_projections (
     id               BIGSERIAL PRIMARY KEY,
     employee_id      BIGINT        NOT NULL REFERENCES employees (id),
-    fiscal_year      SMALLINT      NOT NULL,
+    fiscal_year      INTEGER       NOT NULL,
     projected_amount NUMERIC(12,2) NOT NULL CHECK (projected_amount >= 0),
     UNIQUE (employee_id, fiscal_year)
 );
@@ -121,8 +121,8 @@ CREATE TABLE personal_expense_projections (
 -- ---------------------------------------------------------------- operación
 CREATE TABLE payroll_periods (
     id            BIGSERIAL PRIMARY KEY,
-    year          SMALLINT    NOT NULL CHECK (year BETWEEN 2000 AND 2100),
-    month         SMALLINT    NOT NULL CHECK (month BETWEEN 1 AND 12),
+    year          INTEGER     NOT NULL CHECK (year BETWEEN 2000 AND 2100),
+    month         INTEGER     NOT NULL CHECK (month BETWEEN 1 AND 12),
     status        VARCHAR(12) NOT NULL DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'CALCULATED', 'CLOSED')),
     calculated_at TIMESTAMPTZ,
     closed_at     TIMESTAMPTZ,
@@ -168,7 +168,7 @@ CREATE TABLE payslip_lines (
     quantity     NUMERIC(10,2),
     rate         NUMERIC(14,6),
     amount       NUMERIC(12,2) NOT NULL,
-    sort_order   SMALLINT      NOT NULL DEFAULT 0
+    sort_order   INTEGER       NOT NULL DEFAULT 0
 );
 CREATE INDEX ix_payslip_lines_payslip ON payslip_lines (payslip_id);
 
