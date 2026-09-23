@@ -21,7 +21,7 @@
         <maven.compiler.release>21</maven.compiler.release>
         <springdoc.version>2.9.1</springdoc.version>
         <jjwt.version>0.13.0</jjwt.version>
-        <openpdf.version>2.4.0</openpdf.version>
+        <openpdf.version>3.0.5</openpdf.version>
         <jacoco.version>0.8.15</jacoco.version>
     </properties>
 
@@ -126,6 +126,21 @@
                 <configuration>
                     <argLine>@{argLine} -XX:+EnableDynamicAgentLoading</argLine>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <argLine>@{argLine} -XX:+EnableDynamicAgentLoading</argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
