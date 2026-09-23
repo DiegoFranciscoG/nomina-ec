@@ -3,3 +3,5 @@
 /node_modules
 /.angular/cache
 /coverage
+/test-results
+/playwright-report
