@@ -55,8 +55,8 @@ type Tab = 'current' | 'audit' | 'tax';
                 <tr [style.opacity]="p.inForce ? 1 : 0.7">
                   <td><strong>{{ p.code }}</strong><div class="muted small">{{ p.description }}</div></td>
                   <td class="num"><strong>{{ fmt(p.code, p.value) }}</strong></td>
-                  <td>{{ p.validFrom }}</td>
-                  <td>{{ p.validTo ?? '—' }}</td>
+                  <td class="nowrap">{{ p.validFrom }}</td>
+                  <td class="nowrap">{{ p.validTo ?? '—' }}</td>
                   <td class="small">{{ p.legalBasis }}<br /><a [href]="p.sourceUrl" target="_blank" rel="noopener noreferrer">fuente</a> · {{ p.createdBy }}</td>
                   <td>
                     @if (p.inForce) { <span class="badge in-force">Vigente</span> }

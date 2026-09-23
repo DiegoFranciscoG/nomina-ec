@@ -24,7 +24,9 @@ import { Employee, LegalParameter, PayrollSheet } from '../core/models';
     <div class="grid cols-2" style="margin-top: 18px">
       <section class="card">
         <h2>Costo mensual del empleador</h2>
-        @if (sheets().length === 0) {
+        @if (loading()) {
+          <p class="muted">Cargando planillas…</p>
+        } @else if (sheets().length === 0) {
           <p class="muted">Aún no hay periodos calculados. <a routerLink="/periods">Crear periodo</a></p>
         } @else {
           <div class="bar-chart" role="img" [attr.aria-label]="'Costo del empleador por mes'">
@@ -79,6 +81,7 @@ export class DashboardPage implements OnInit {
   protected readonly sheets = signal<PayrollSheet[]>([]);
   protected readonly parameters = signal<LegalParameter[]>([]);
   protected readonly error = signal('');
+  protected readonly loading = signal(true);
 
   protected readonly activeEmployees = computed(() => this.employees().filter((e) => e.active).length);
   protected readonly last = computed(() => this.sheets().at(-1) ?? null);
@@ -113,6 +116,8 @@ export class DashboardPage implements OnInit {
       this.sheets.set(await Promise.all(calculated.map((p) => this.api.sheet(p.id))));
     } catch (e) {
       this.error.set(errorMessage(e));
+    } finally {
+      this.loading.set(false);
     }
   }
 
