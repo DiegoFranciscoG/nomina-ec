@@ -1,0 +1,73 @@
+# Secrets have NO defaults: the app refuses to start if they are missing.
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  error:
+    include-stacktrace: never
+    include-message: never
+  shutdown: graceful
+
+spring:
+  application:
+    name: nomina-ec
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:5}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    default-property-inclusion: always
+    serialization:
+      write-dates-as-timestamps: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+app:
+  company-name: ${COMPANY_NAME:Empresa Demo S.A.}
+  demo-data: ${DEMO_DATA:false}
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:30}
+    issuer: nomina-ec
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+  bootstrap:
+    admin-username: ${ADMIN_USERNAME:admin}
+    admin-password: ${ADMIN_PASSWORD}
+    demo-username: ${DEMO_USERNAME:}
+    demo-password: ${DEMO_PASSWORD:}
+  login-rate-limit:
+    max-attempts: ${LOGIN_MAX_ATTEMPTS:5}
+    window-seconds: ${LOGIN_WINDOW_SECONDS:60}
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: WARN
