@@ -1,7 +1,7 @@
 # Secrets have NO defaults: the app refuses to start if they are missing.
 server:
   port: ${PORT:8080}
-  forward-headers-strategy: framework
+  forward-headers-strategy: native
   error:
     include-stacktrace: never
     include-message: never
@@ -45,8 +45,10 @@ management:
 
 springdoc:
   swagger-ui:
+    enabled: ${API_DOCS_ENABLED:true}
     path: /swagger-ui.html
   api-docs:
+    enabled: ${API_DOCS_ENABLED:true}
     path: /v3/api-docs
 
 app:

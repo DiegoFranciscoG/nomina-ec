@@ -1,0 +1,36 @@
+# Render Blueprint (plan free): API in Docker. The database lives in Neon (Render free Postgres expires after 30 days).
+# Secrets are marked sync: false -> Render asks for them in the dashboard; they are never stored in the repo.
+services:
+  - type: web
+    name: nomina-ec-api
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    envVars:
+      - key: DB_URL
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: DEMO_PASSWORD
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: DEMO_USERNAME
+        value: demo
+      - key: DEMO_DATA
+        value: "true"
+      - key: DB_POOL_SIZE
+        value: "3"
+      - key: JWT_EXPIRATION_MINUTES
+        value: "30"
