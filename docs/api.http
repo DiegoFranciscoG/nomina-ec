@@ -1,0 +1,85 @@
+### nomina-ec — colección de ejemplos (VS Code REST Client / IntelliJ HTTP Client)
+### Define las variables en tu entorno local; nunca pongas contraseñas reales en este archivo.
+@base = http://localhost:8080
+@user = demo
+@password = {{$dotenv DEMO_PASSWORD}}
+
+### 1. Login -> copia el token de la respuesta
+# @name login
+POST {{base}}/api/auth/login
+Content-Type: application/json
+
+{ "username": "{{user}}", "password": "{{password}}" }
+
+###
+@token = {{login.response.body.token}}
+
+### 2. Parámetros legales con vigencia y fuente
+GET {{base}}/api/legal-parameters
+Authorization: Bearer {{token}}
+
+### 3. Tabla de IR 2026 y límites de gastos personales
+GET {{base}}/api/legal-parameters/tax-tables/2026
+Authorization: Bearer {{token}}
+
+### 4. Nueva versión de un parámetro (solo ADMIN): SBU hipotético desde 2027
+POST {{base}}/api/legal-parameters
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "code": "SBU",
+  "value": 500,
+  "validFrom": "2027-01-01",
+  "legalBasis": "Acuerdo ministerial (ejemplo)",
+  "sourceUrl": "https://www.trabajo.gob.ec/",
+  "reason": "Ejemplo de actualización anual del SBU"
+}
+
+### 5. Auditoría de cambios
+GET {{base}}/api/legal-parameters/audit?code=SBU
+Authorization: Bearer {{token}}
+
+### 6. Crear periodo
+POST {{base}}/api/periods
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "year": 2026, "month": 10 }
+
+### 7. Registrar horas suplementarias (periodId=1, employeeId=1)
+POST {{base}}/api/periods/1/novelties
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "employeeId": 1, "noveltyType": "OVERTIME_SUPPLEMENTARY", "quantity": 10, "description": "Cierre contable" }
+
+### 8. Calcular roles del periodo
+POST {{base}}/api/periods/1/calculate
+Authorization: Bearer {{token}}
+
+### 9. Planilla del periodo (JSON y PDF)
+GET {{base}}/api/periods/1/payroll
+Authorization: Bearer {{token}}
+
+###
+GET {{base}}/api/periods/1/payroll.pdf
+Authorization: Bearer {{token}}
+
+### 10. Rol individual en PDF
+GET {{base}}/api/payslips/1/pdf
+Authorization: Bearer {{token}}
+
+### 11. Simulador: ¿cuánto cuesta contratar a alguien?
+POST {{base}}/api/simulations/hiring-cost
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "monthlySalary": 800, "weeklyHours": 40, "thirteenthMode": "MONTHLY", "fourteenthMode": "MONTHLY" }
+
+### 12. Vista previa de liquidación
+POST {{base}}/api/settlements/preview
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "employeeId": 3, "terminationDate": "2026-09-30", "reason": "RESIGNATION", "pendingSalaryDays": 30, "unusedVacationDays": 0 }
