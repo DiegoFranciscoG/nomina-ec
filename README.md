@@ -211,4 +211,4 @@ Código bajo licencia [MIT](LICENSE).
 
 ## Autor
 
-**Diego Francisco Granda Zhingre** · [GitHub](https://github.com/DiegoFranciscoG) · [LinkedIn](https://www.linkedin.com/in/CAMBIAR)
+**Diego Francisco Granda Zhingre** · [GitHub](https://github.com/DiegoFranciscoG)
