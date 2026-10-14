@@ -46,7 +46,7 @@ jobs:
         run: ./mvnw -B -ntp verify
       - name: Reporte de cobertura
         if: always()
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: jacoco-report
           path: backend/target/site/jacoco
