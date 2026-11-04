@@ -22,7 +22,7 @@
         <springdoc.version>2.9.1</springdoc.version>
         <jjwt.version>0.13.0</jjwt.version>
         <openpdf.version>3.0.5</openpdf.version>
-        <jacoco.version>0.8.15</jacoco.version>
+        <jacoco.version>0.8.16</jacoco.version>
     </properties>
 
     <dependencies>
